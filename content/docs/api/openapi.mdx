@@ -9,11 +9,15 @@ The whole API — endpoints, parameters, result objects, errors and authenticati
 
 It is checked against the live API's answers when it changes.
 
-## Import into Postman
+## Postman
 
-1. In Postman, choose **Import** and paste `https://bklink.uk/docs/openapi.json`.
-2. Postman makes a collection with every request.
-3. In the collection's **Authorization** tab choose **Bearer Token** and set it to your key from [bklink.uk/api-keys](https://bklink.uk/api-keys). Keep it in a Postman environment variable, not in a shared collection.
+The collection is in bklink's public Postman workspace: **[postman.com/bklink1/bklink-s-workspace](https://www.postman.com/bklink1/bklink-s-workspace)**.
+
+1. Fork the **mxverify BV API** collection into your own workspace.
+2. Make an environment with a variable `bearerToken` (type *secret*) set to your key from [bklink.uk/api-keys](https://bklink.uk/api-keys). The collection sends it as `Authorization: Bearer {{bearerToken}}`; `baseUrl` is already `https://mxverify.uk`.
+3. Send **Look up one site**.
+
+To build the collection yourself instead, choose **Import** in Postman and paste `https://bklink.uk/docs/openapi.json`.
 
 ## Generate a client
 
