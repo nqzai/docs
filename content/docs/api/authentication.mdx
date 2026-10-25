@@ -1,0 +1,30 @@
+---
+title: Authentication
+description: Send your key with every request. Keep partner keys on a server.
+---
+
+Every request needs a key. Make one at [bklink.uk/api-keys](https://bklink.uk/api-keys) (see [API keys](/bklink/api-keys)).
+
+Send it in either header:
+
+```http
+Authorization: Bearer mxk_your_key
+```
+
+```http
+X-API-Key: mxk_your_key
+```
+
+A request with no key answers `401` with `"error": "missing_key"`; one with a key that does not exist or was revoked answers `401` with `"error": "invalid_key"`. Both carry `WWW-Authenticate: Bearer realm="mxverify BV API"`.
+
+## Keys in the browser
+
+CORS is open (`Access-Control-Allow-Origin: *`), so a free key works from a browser. But a key in a public page can be read and used by anyone who views it, and its daily limits are shared with them.
+
+<Callout type="warn" title="Keep partner keys on a server">
+  A partner key's usage beyond the free allowance is charged to your wallet. Call the API from your server, cache the answers (see [terms](/api/attribution-and-terms)), and never put a partner key in client-side code.
+</Callout>
+
+## Rotating and revoking
+
+You can hold up to 5 live keys. To rotate, make a new key, deploy it, then revoke the old one. A revoked key stops working within about a minute. A new key starts working within about a minute of being made.

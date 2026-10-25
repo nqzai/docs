@@ -1,0 +1,69 @@
+---
+title: The BV score
+description: How the dollar value of one new followed link from a site is worked out, and what it is not.
+---
+
+**BV** (backlink value) is what a link is worth to rankings, in US dollars. A site's **BV score** is the value of one new followed link from it: what its links are typically worth before anything about your own site is known.
+
+<Callout type="info" title="The authority">
+  The live model, with its current version, every rate and threshold, is on [mxverify.uk/backlink-value](https://mxverify.uk/backlink-value) and [mxverify.uk/methodology](https://mxverify.uk/methodology). This page explains how to read it.
+</Callout>
+
+## Three factors
+
+<Steps>
+<Step>
+
+### Site Strength (0 to 100)
+
+Half the site's authority rating (Ahrefs Domain Rating), half its estimated monthly organic traffic on a log scale. It sets the ceiling: the most a followed editorial link from the site can be worth, halving for every fixed number of points below 100. mxverify shows strength in steps of 5. A site with no authority rating on record is not valued.
+
+</Step>
+<Step>
+
+### Link level (A to D)
+
+How much of the ceiling the kind of link the site gives keeps:
+
+| Level | Kind of link | Multiplier |
+|---|---|---|
+| A | Editorial citation: linked because it is useful to readers | ×1 |
+| B | Guest, sponsored or placed post; product or tool directory listing | ×0.5 |
+| C | Press release, syndicated copy, profile, forum post, footer or sidebar link, and any nofollow link | ×0.1 |
+| D | A site on one owner's link network | ×0.05 |
+
+Where bklink has audited links on the site, those links are read to decide the level. Otherwise mxverify reads the site's homepage and up to ten articles and asks a calibrated model what kind of site it is and what kind of link it gives.
+
+</Step>
+<Step>
+
+### Relevance
+
+How close the linking site is to the site the link points to, from ×0.5 (unrelated) to ×1.25 (same topic). A report cannot know your site, so the score is worked out at ×1 and both ends of the range are printed beside it. In a bklink audit relevance is read link by link.
+
+</Step>
+</Steps>
+
+## Caps
+
+Two caps can lower the level a site is priced at, and a report names them after the level, for example "level B · nofollow":
+
+- **nofollow**: a share of the site's links carry nofollow, sponsored or ugc, which BV counts as passing no ranking credit.
+- **high-risk niche**: the site is likely adult, gambling, pharmacy or similar. Its links are valued for a buyer outside the niche; the report also gives the figure for a buyer inside it.
+
+A site Google lists no page of is also capped at level C unless something on record shows Google indexing it.
+
+## Unrated sites
+
+A site with no authority rating on record is **unrated**: a link from it is not valued. A report shows no figure rather than $0, and the BV API answers `unrated`.
+
+## What BV is not
+
+- **Not a Domain Rating.** Domain Rating is Ahrefs' 0 to 100 score of a site's backlinks, and one input here. BV is a dollar value.
+- **Not a price.** It says what a link is worth, not what a publication charges.
+- **Not a guarantee.** A footer link, a nofollow link or a syndicated copy on the same site is worth a fraction of the figure.
+- **Not a verdict on a site.** It is a model of ranking value, worked out the same way for every site.
+
+## Versions
+
+BV has a version (for example 2.8). Figures move when a site's record is re-read (each figure at most every 30 days) or when the model changes. Every API answer carries the version it was worked out under.

@@ -1,0 +1,6 @@
+{
+  "title": "mxverify",
+  "description": "Backlink values",
+  "root": true,
+  "pages": ["index", "bv-score", "site-reports", "badges", "for-ai-agents"]
+}

@@ -1,0 +1,83 @@
+---
+title: BV API
+description: Any website's BV score — what one new followed link from it is worth, in dollars — as JSON, with a free key.
+---
+
+The BV API returns the same figure a site's [mxverify report](/mxverify/site-reports) and [badge](/mxverify/badges) show, as JSON, so you can show it in your own product.
+
+- **Base URL:** `https://mxverify.uk/api/v1/bv`
+- **Authentication:** a free key from [bklink.uk/api-keys](https://bklink.uk/api-keys), sent as `Authorization: Bearer <key>`
+- **Format:** JSON over HTTPS. CORS is open.
+- **Attribution required:** wherever you show a BV, show "BV by mxverify" linked to the site's report. See [Attribution and terms](/api/attribution-and-terms).
+
+## Quickstart
+
+<Steps>
+<Step>
+
+### Get a key
+
+Sign in at [bklink.uk](https://bklink.uk/sign-up), open **API keys**, and make one. It is shown once: copy it.
+
+</Step>
+<Step>
+
+### Look up a site
+
+```bash
+curl https://mxverify.uk/api/v1/bv/google.com \
+  -H "Authorization: Bearer mxk_your_key"
+```
+
+```json
+{
+  "target": "google.com",
+  "status": "valued",
+  "bv": {
+    "usd": 182.92,
+    "per": "followed link",
+    "level": "C",
+    "caps": "",
+    "version": "2.8",
+    "audited": false
+  },
+  "report_url": "https://mxverify.uk/publications/google.com",
+  "attribution": {
+    "text": "BV by mxverify",
+    "url": "https://mxverify.uk/publications/google.com",
+    "required": true
+  }
+}
+```
+
+</Step>
+<Step>
+
+### Show it, with the attribution
+
+```html
+<span>BV $183 per link · <a href="https://mxverify.uk/publications/google.com">BV by mxverify</a></span>
+```
+
+</Step>
+</Steps>
+
+## What you can call
+
+| Endpoint | What it does | Who |
+|---|---|---|
+| `GET /api/v1/bv/{domain}` | One site | Every key |
+| `POST /api/v1/bv` | Up to 100 sites in one request | Every key |
+| `POST /api/v1/bv/valuations` | A bulk valuation job of up to 1,000 sites | [Partner keys](/api/partner-tier) |
+| `GET /api/v1/bv/valuations/{id}` | A job's progress and answers | Partner keys |
+
+## Free and partner keys
+
+| | Free key | Partner key |
+|---|---|---|
+| Lookups a day, per key | 1,000 | 50,000 (or your account's own limit) |
+| New sites valued a day, per key | 25 | 5,000 (or your account's own limit) |
+| Price | Free | The free allowance, then $0.001 a lookup and $0.02 a site valued |
+| Bulk jobs | No | Yes |
+
+A site mxverify already values costs nothing to look up beyond the lookup itself. A site it has never valued is valued on demand. See [Partner tier](/api/partner-tier).

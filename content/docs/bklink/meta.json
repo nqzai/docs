@@ -1,0 +1,6 @@
+{
+  "title": "bklink",
+  "description": "Backlink audits",
+  "root": true,
+  "pages": ["index", "getting-started", "audits", "reports", "valuation", "re-checks", "disavow", "index-checker", "link-indexer", "sharing-and-white-label", "wallet-and-pricing", "api-keys"]
+}

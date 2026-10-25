@@ -1,0 +1,36 @@
+---
+title: Reading a report
+description: What each part of a bklink audit report means, and what it cannot tell you.
+---
+
+A report answers three questions about a list of placements: what you actually received, where it runs, and what it is worth.
+
+## Link states
+
+Every link is in one state, read from the page at the time of the check:
+
+- **Followed**: the link is on the page and passes ranking credit as marked.
+- **Nofollow, sponsored or ugc**: the link is there but marked as passing no credit. Search engines treat these marks as hints; BV counts them as passing none.
+- **Removed**: the page loads but the link is no longer on it.
+- **Dead page**: the page answers an error or no longer exists.
+- **Could not verify**: the page could not be read reliably. Such links are left out of the value and listed after the verified ones.
+
+## Servers and networks
+
+Publications are grouped by the server they run on. A group of ten or more distinct domains on one address is examined for footprints of one owner; when they agree, the group is named a network and its links are valued at level D. A shared address alone is not treated as a network.
+
+## Value
+
+Each link carries its BV: the dollar value of the link to rankings under the published model. The report totals them and shows, link by link, what lowered a value (nofollow, a network, a syndicated copy, a second link from the same site). See [How bklink values links](/bklink/valuation).
+
+A valuation is an estimate, not an appraisal. It is not a prediction of rankings, and not what a vendor will charge.
+
+## Changes over time
+
+A [status re-check](/bklink/re-checks) runs the live checks again and dates every change, so a link stripped to nofollow or removed after delivery shows when it happened.
+
+## What a report cannot tell you
+
+- Whether a search engine has counted a link. A followed link on an indexed page is the precondition, not proof.
+- Who owns a server. Footprints of one owner are evidence of common control, not a statement about any person.
+- What a link will do for one site's rankings.

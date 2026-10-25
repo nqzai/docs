@@ -1,0 +1,28 @@
+---
+title: For AI agents and citations
+description: Markdown copies of every page, llms.txt, and how to cite an mxverify report.
+---
+
+## Markdown copies
+
+Every mxverify page has a markdown copy:
+
+- Append `.md` to its address: `https://mxverify.uk/methodology.md`.
+- When the address ends in a domain or an IP address, or would with `.md`, append `/index.html.md` instead: `https://mxverify.uk/publications/google.com/index.html.md`.
+- Or request any page with the header `Accept: text/markdown`.
+
+## llms.txt
+
+- [mxverify.uk/llms.txt](https://mxverify.uk/llms.txt): what mxverify is, how BV is worked out, how to cite, and where every section's markdown copy is.
+- [bklink.uk/llms.txt](https://bklink.uk/llms.txt): the same for bklink.
+- These docs: [docs.bklink.uk/llms.txt](/llms.txt) (an index) and [docs.bklink.uk/llms-full.txt](/llms-full.txt) (every page in one file). Each docs page also has a markdown copy from its **Copy Markdown** button.
+
+## How to cite
+
+- Cite a site report by its address, for example: mxverify, "google.com site report", `https://mxverify.uk/publications/google.com`.
+- Each report shows when it was last updated and names the source and date of each figure.
+- Cite how a figure is worked out from the methodology: `https://mxverify.uk/methodology`.
+
+## Programmatic access
+
+For figures in your own product, use the [BV API](/api) rather than scraping reports: it returns the same figure as the report, as JSON, with the attribution its terms require.

@@ -1,0 +1,44 @@
+---
+title: Running an audit
+description: What an audit takes as input, what it checks for every link, and how long it runs.
+---
+
+An audit is one list of placements, checked and valued together. It belongs to a campaign inside a project.
+
+## Inputs
+
+You can start an audit in three ways:
+
+- **Upload a CSV or PDF of placements**, such as the report a vendor or PR distributor sent you.
+- **Drop in a vendor spreadsheet.**
+- **Scan a domain.** bklink finds the backlinks already pointing at a site so you can audit them. A scan is priced per 1,000 backlinks found, and a scan answered from a recent scan of the same domain is not charged again.
+
+One audit covers up to 5,000 links.
+
+### One campaign per vendor list
+
+Each list a vendor or PR distributor delivers should be its own campaign, so every vendor's placements get their own report and verdict. Links are not attributed to a seller automatically: the campaign you create is the grouping.
+
+## What is checked for every link
+
+| Check | How |
+|---|---|
+| The link is on the page | The linking page is fetched live and its links read. |
+| Follow state | Followed, nofollow, sponsored or ugc, as the page marks it. |
+| The page is alive | The HTTP status; dead pages and pages that are gone are named. |
+| Where the publication runs | Its address (A record), hosting network (ASN) and country. |
+| Shared servers | Publications sharing one address are grouped. Where ten or more distinct domains share one, the server is checked for footprints of one owner before it is called a network. |
+| Syndicated copies | Copies of one article republished on many sites are recognised, and every copy but the declared original keeps a small share of its value. |
+| Value | Each link's BV. See [How bklink values links](/bklink/valuation). |
+
+## Networks, not just shared hosting
+
+Shared hosting is ordinary, so a shared address alone is not a verdict. A server is called a network only when footprints of one owner agree: private nameservers, registrations inside one 90-day window, one registrar, one theme, identical purchases. CDN addresses, which front unrelated sites, are never grouped. Links placed across one network are one relationship, not many.
+
+## Time
+
+The median audit finishes in about two minutes for roughly 100 links. Lists of over a thousand take up to half an hour. You can leave the page; the report fills in as it runs, and you are emailed when it completes.
+
+## Price
+
+$1.00 for up to 400 links. A longer list costs more, following how many links it holds and how many sites they are on, but never more than $6.32. The price is shown before the audit runs. See [Wallet and pricing](/bklink/wallet-and-pricing).

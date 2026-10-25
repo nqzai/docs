@@ -1,0 +1,44 @@
+---
+title: Disavow files
+description: Build a Google disavow file from an audit, with the evidence for each suggestion and the case against it.
+---
+
+From an audit, bklink builds a disavow list you can defend and writes the file Google's disavow links tool expects. Building and downloading it is free with any audit. bklink never uploads anything for you.
+
+<Callout type="warn" title="First: most sites should not disavow">
+  Google's guidance is that in most cases it can work out which links to trust, and that most sites will not need the tool. It is for a site with many spammy, artificial or low-quality links that have caused a manual action, or are likely to. Disavowing links that were helping you removes their value.
+</Callout>
+
+## How it works
+
+1. **Audit the links.** Upload a vendor's placement list or scan your domain. See [Running an audit](/bklink/audits).
+2. **Review the suggestions.** bklink puts forward only domains with one of the four signals below, each with its evidence and the argument against acting on it. Nothing goes on the list until you add it.
+3. **Add your own.** Add any domain or URL by hand, with a note. A removed entry is kept in the list's history with your reason.
+4. **Download the file.** A complete, sorted `.txt` with duplicates and entries already covered by a `domain:` line removed, and a comment recording why each entry is there.
+5. **Upload it yourself** in Google Search Console's disavow links tool. A new upload replaces the old list; Google says it can take a few weeks to take effect.
+
+bklink refuses to export an empty file, because uploading one would wipe every disavow Google already holds for the property.
+
+## The four signals behind a suggestion
+
+Each is a fact the audit established, not a score, and each suggestion is made only for a link proved live and followed.
+
+| Signal | Evidence | The case against |
+|---|---|---|
+| Private network hosting | The domain shares one server with at least 10 distinct domains, on an identified host that is not a CDN. Five or more suggestions on one address are shown as one finding. | Busy shared hosting looks the same from outside. Open a few of the sites first. |
+| Brand look-alike domain | The domain trades on a major publisher's name without being that publisher. | A name match is a string test, not an investigation. |
+| Spam score of 60 or more | On links found by scanning your domain, the backlink index's own spam score. It is not a toxicity score, and not Ahrefs DR or Moz DA. | It is a vendor's opinion, and Google may already ignore the link. |
+| A repeated commercial anchor | The same anchor from 5 or more unrelated domains. Generic anchors, your brand, bare URLs and syndicated press-release copies never count. | One outreach template can produce the same anchor honestly. |
+
+## Never suggested
+
+Nofollow and sponsored links, links that are not on the page, pages that could not be loaded, dead pages (404, 410, 5xx) and a search engine's own domains. You can still add any of these by hand.
+
+## Google's file format
+
+- A `.txt` file, UTF-8 or 7-bit ASCII, one entry per line.
+- `domain:example.com` disavows the domain and all its subdomains; a full URL disavows that one page.
+- Lines starting with `#` are comments, which Google ignores.
+- At most 2,048 characters per URL, 100,000 lines (blank and comment lines included) and 2 MB per file.
+
+Every file is checked against these limits before it is offered. The full guide is at [bklink.uk/disavow-tool](https://bklink.uk/disavow-tool).

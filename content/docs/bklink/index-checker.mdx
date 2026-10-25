@@ -1,0 +1,27 @@
+---
+title: Google index checker
+description: Check whether Google has indexed pages, from a list or a sitemap, and see the odds for the ones it has not.
+---
+
+The index checker asks Google about every page you give it and sorts the result.
+
+## How it works
+
+1. **Paste URLs or read a sitemap.** Up to 5,000 URLs at once: a list, a CSV, or the sitemap your robots.txt names. The exact count and price are shown before anything runs.
+2. **A live search per URL.** bklink searches Google for each exact address, the same `site:` search you would type, run live rather than read from a stored index.
+3. **Every page lands in one group:**
+   - **In Google**: listed at its own address.
+   - **Likely**: it loads, has 800 or more words, and its site is in Google.
+   - **Possible**: it loads and its site is in Google, but it is shorter or reads as a templated listing.
+   - **Unlikely to be indexed**, with the reason.
+4. **Open a group** to see each URL's HTTP status, word count, how many pages Google lists for its site, and a link that repeats the Google search yourself.
+
+Large checks run in the background, and you are emailed when they finish.
+
+## Reasons a page is unlikely to be indexed
+
+The checker reads every page first and names, free, the ones that cannot be indexed as they stand: gone (404 or 410), unreachable, redirects elsewhere, says noindex, names another canonical, blocked by robots.txt, too thin, or on a site Google lists nothing of.
+
+## Price
+
+$0.01 a URL, charged before the check runs. Nothing is charged while checks are paused. To send pages to Google, see the [link indexer](/bklink/link-indexer).

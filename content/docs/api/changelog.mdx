@@ -1,0 +1,16 @@
+---
+title: Changelog
+description: Changes to the BV API.
+---
+
+## 2026-10-25
+
+- **Partner tier.** Volume limits (50,000 lookups and 5,000 new valuations a key a day), paid beyond the free allowance at $0.001 a lookup and $0.02 a site valued, charged nightly to the bklink wallet. Apply on [bklink.uk/api-keys](https://bklink.uk/api-keys). See [Partner tier](/api/partner-tier).
+- **Bulk valuation jobs** for partner keys: `POST /api/v1/bv/valuations` with up to 1,000 sites, `GET /api/v1/bv/valuations/{id}` for progress. See [Bulk jobs](/api/bulk-jobs).
+- New errors: `funds_needed` (429), `partner_only` (403), `too_many_jobs` (429), `not_found` (404, jobs), `unavailable` (503, jobs).
+- Terms: answers may be cached up to 30 days; no resale or bulk redistribution of BV. Attribution may be any working link, including `rel="nofollow"`.
+- `bv.caps` is plain words (`"nofollow"`), not the badge's ` · nofollow`.
+
+## 2026-10-25 (launch)
+
+- `GET /api/v1/bv/{domain}` and `POST /api/v1/bv` (up to 100 targets), with a free key: 1,000 lookups and 25 new valuations a key a day. Sites never valued are valued on demand.

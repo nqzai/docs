@@ -1,0 +1,7 @@
+# Secret scanning for this public repository: gitleaks' default rules, with the documentation's placeholder keys allowed.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Placeholder API keys in examples, not real keys"
+regexes = ['''mxk_(your|partner)_key''']

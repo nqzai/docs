@@ -1,0 +1,30 @@
+---
+title: BV badges
+description: Show a site's BV on any web page with a plain HTML badge. No script runs on your site.
+---
+
+Every valued site has a BV badge: an image of its current BV score, linked to its mxverify report. The embed is plain HTML, an `<a>` around an `<img>`. No script runs on your page.
+
+## Embed
+
+Replace `example.com` with the site's domain:
+
+```html
+<a href="https://mxverify.uk/publications/example.com" title="example.com: backlink value on mxverify">
+  <img src="https://mxverify.uk/badge/example.com.svg" alt="example.com backlink value on mxverify"
+       width="236" height="60" style="border:0" loading="lazy">
+</a>
+```
+
+On a dark background use the dark badge: `https://mxverify.uk/badge/dark/example.com.svg`.
+
+Each report has a **Badge** button with the embed for that site, ready to copy.
+
+## Behaviour
+
+- **Size:** 236 × 60 pixels, SVG.
+- **Freshness:** the badge shows the same figure as the report, and is cached for up to six hours.
+- **No figure:** a site with no report, or no figure to show, gets a neutral badge rather than a broken image.
+- **The link** points to the site's report, so readers can see how the figure was worked out.
+
+To show BV in your own design instead of an image, use the [BV API](/api); its [terms](/api/attribution-and-terms) ask for a "BV by mxverify" link beside the figure.

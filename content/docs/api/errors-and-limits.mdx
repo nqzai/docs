@@ -1,0 +1,54 @@
+---
+title: Errors and limits
+description: Daily limits, rate-limit headers, and every error the API answers.
+---
+
+## Limits
+
+Limits are per key, per UTC day.
+
+| | Free key | Partner key |
+|---|---|---|
+| Lookups (each target is one) | 1,000 | 50,000, or your account's own limit |
+| New sites valued | 25 | 5,000, or your account's own limit |
+| Targets per batch request | 100 | 100 |
+| Targets per bulk job | — | 1,000 |
+| Bulk jobs running at once | — | 3 |
+| Live keys per account | 5 | 5 |
+
+New valuations on every key also share a daily capacity across the service. Counting is approximate by a few calls in a busy minute.
+
+A partner key's lookups and valuations beyond the free allowance run only while its account's wallet covers them; otherwise the key answers at the free limits. See [Partner tier](/api/partner-tier).
+
+## Headers
+
+Every successful lookup carries:
+
+- `X-RateLimit-Limit`: the key's lookups a day.
+- `X-RateLimit-Remaining`: lookups left today.
+
+A `429` and a `valuing` answer carry `Retry-After` (seconds). For a daily limit, it is the time to the next UTC midnight.
+
+## Errors
+
+Errors answer a JSON body `{"error": "<code>", "message": "<plain words>", "docs": "https://mxverify.uk/api"}`.
+
+| HTTP | `error` | When |
+|---|---|---|
+| 400 | `bad_request` | The body is not `{"targets": [...]}` with at least one target. |
+| 400 | `too_many_targets` | More than 100 targets in a batch, or 1,000 in a job. |
+| 401 | `missing_key` | No key was sent. |
+| 401 | `invalid_key` | The key does not exist or was revoked. |
+| 403 | `partner_only` | A bulk job was asked for with a free key. |
+| 404 | `not_found` | No such job for this key (jobs are kept a week). |
+| 405 | `method_not_allowed` | The wrong method for the path. The `Allow` header names the right one. |
+| 429 | `daily_limit` | The key's lookups for the day are used. |
+| 429 | `funds_needed` | A partner key's free lookups are used and its wallet does not cover more. |
+| 429 | `too_many_jobs` | Three of the key's jobs are already running. |
+| 503 | `unavailable` | A job could not be started just now. Try again in a minute. |
+
+## Handling them
+
+- On `429`, wait for `Retry-After` before trying again.
+- On `202` or `valuing`, ask again after `retry_after`; do not loop faster.
+- Treat `unrated` and `not_found` as "no figure", and cache them like any other answer.

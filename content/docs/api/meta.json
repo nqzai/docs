@@ -1,0 +1,6 @@
+{
+  "title": "BV API",
+  "description": "Backlink values as JSON",
+  "root": true,
+  "pages": ["index", "authentication", "lookups", "responses", "errors-and-limits", "---Partner tier---", "partner-tier", "bulk-jobs", "---Reference---", "attribution-and-terms", "examples", "changelog"]
+}

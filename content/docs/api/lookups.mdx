@@ -1,0 +1,64 @@
+---
+title: Lookups
+description: Look up one site, or up to 100 in one request.
+---
+
+## One site
+
+```http
+GET /api/v1/bv/{domain}
+```
+
+```bash
+curl https://mxverify.uk/api/v1/bv/google.com \
+  -H "Authorization: Bearer mxk_your_key"
+```
+
+`{domain}` is a website address. A full URL or a `www.` form is accepted and reduced to the site (`https://www.google.com/search` is `google.com`); a subdomain is its own site. Reserved names that are never real sites, such as `example.com` or anything ending `.test`, answer `invalid`. The answer is one [result object](/api/responses).
+
+The HTTP status follows the result:
+
+| HTTP | When |
+|---|---|
+| `200` | `valued`, `unrated`, `not_valued`, `not_found` |
+| `202` | `valuing`: the site is being valued now; ask again after `retry_after` seconds |
+| `400` | `invalid`: the target is not a website address |
+
+## Many sites
+
+```http
+POST /api/v1/bv
+Content-Type: application/json
+
+{"targets": ["google.com", "newly-launched-site.com"]}
+```
+
+```bash
+curl https://mxverify.uk/api/v1/bv \
+  -H "Authorization: Bearer mxk_your_key" \
+  -H "Content-Type: application/json" \
+  -d '{"targets": ["google.com", "newly-launched-site.com"]}'
+```
+
+Up to **100 targets** a request. The answer is `200` with one result per target, in the order sent:
+
+```json
+{
+  "results": [
+    { "target": "google.com", "status": "valued", "bv": { "usd": 182.92, "per": "followed link", "level": "C", "caps": "", "version": "2.8", "audited": false }, "report_url": "https://mxverify.uk/publications/google.com", "attribution": { "text": "BV by mxverify", "url": "https://mxverify.uk/publications/google.com", "required": true } },
+    { "target": "newly-launched-site.com", "status": "valuing", "bv": null, "retry_after": 120 }
+  ]
+}
+```
+
+Each target counts as one lookup. The figures in these examples are illustrative.
+
+## Sites mxverify has never valued
+
+A site with no report is valued **on demand**: the first lookup answers `valuing` with `retry_after` (about two minutes), and a lookup after that has the figure. New valuations count against your key's daily valuation limit. Nothing is valued while you wait on the request, so a lookup always answers quickly.
+
+For hundreds or thousands of new sites, a partner key can use a [bulk job](/api/bulk-jobs) instead of polling.
+
+## Freshness
+
+An answer is the figure the site's report shows, kept up to six hours at the edge. A site's figures are re-read at most every 30 days, and move when the BV model changes; `bv.version` names the model.

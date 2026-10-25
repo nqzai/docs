@@ -1,0 +1,38 @@
+---
+title: Result objects
+description: Every field of a result, and what each status means.
+---
+
+## Fields
+
+| Field | Type | Meaning |
+|---|---|---|
+| `target` | string | What you sent, as sent (trimmed to 300 characters). |
+| `status` | string | One of the statuses below. |
+| `bv` | object or null | The figure, when `status` is `valued`; otherwise `null`. |
+| `bv.usd` | number | The value of one new followed link from the site, in US dollars, to the cent. |
+| `bv.per` | string | Always `"followed link"`: the unit of `usd`. |
+| `bv.level` | string or null | The level the link is priced at: `A` editorial, `B` guest or sponsored, `C` neutralised, `D` link network. See [The BV score](/mxverify/bv-score). |
+| `bv.caps` | string | What lowered the level, in plain words, for example `"nofollow"` or `"nofollow, high-risk niche"`; `""` for none. |
+| `bv.version` | string | The BV model the figure was worked out under, for example `"2.8"`. |
+| `bv.audited` | boolean | Links placed on the site have been checked by bklink audits. |
+| `report_url` | string | The site's mxverify report. Present for `valued` and `unrated`, and as the checker page when a valuation was refused. |
+| `attribution` | object | `{"text": "BV by mxverify", "url": <report_url>, "required": true}`: what to show beside the figure. Present for `valued` and `unrated`. |
+| `retry_after` | number | Seconds until it is worth asking again. Present for `valuing` and some `not_valued`. |
+| `reason` | string | Why, in plain words, for `unrated`, `not_valued`, `not_found` and `invalid`. |
+
+## Statuses
+
+| status | Meaning | What to show |
+|---|---|---|
+| `valued` | The site's BV is in `bv`. | The figure, with "BV by mxverify". |
+| `unrated` | No authority rating is on record for the site, so a link from it is not valued. | Nothing. Never show $0. |
+| `valuing` | mxverify had never valued the site and is valuing it now. | Ask again after `retry_after` seconds. |
+| `not_valued` | A new site could not be valued now: your key's daily limit, the day's capacity, your partner balance, or a moment's failure. `reason` says which. | Ask again after `retry_after`. |
+| `not_found` | No website was found at the address when it was valued. This answer holds for a day. | Nothing. |
+| `invalid` | The target is not a website address. | Fix the input. |
+| `pending` | Bulk jobs only: the job has not reached this site yet. | Read the job again later. |
+
+## Rounding
+
+`bv.usd` is to the cent. mxverify's own pages round figures over $10 to whole dollars; you may round the same way.

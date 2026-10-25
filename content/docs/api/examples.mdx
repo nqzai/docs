@@ -1,0 +1,116 @@
+---
+title: Examples
+description: Lookups, batches and bulk jobs in JavaScript, Python and PHP, with caching and attribution.
+---
+
+Every example reads the key from an environment variable. Run them on a server.
+
+## JavaScript (Node 18+)
+
+<Tabs items={["One site", "Batch with cache"]}>
+<Tab value="One site">
+
+```js
+const res = await fetch(`https://mxverify.uk/api/v1/bv/${encodeURIComponent(domain)}`, {
+  headers: { Authorization: `Bearer ${process.env.MXVERIFY_KEY}` },
+});
+const answer = await res.json();
+
+if (answer.status === "valued") {
+  const usd = Math.round(answer.bv.usd);
+  html = `BV $${usd} per link · <a href="${answer.attribution.url}">${answer.attribution.text}</a>`;
+} else if (answer.status === "valuing") {
+  // Ask again after answer.retry_after seconds.
+}
+```
+
+</Tab>
+<Tab value="Batch with cache">
+
+```js
+const THIRTY_DAYS = 30 * 24 * 3600 * 1000;
+
+async function bvFor(domains, cache) {
+  const stale = domains.filter((d) => !cache.has(d) || Date.now() - cache.get(d).at > THIRTY_DAYS);
+  for (let i = 0; i < stale.length; i += 100) {
+    const res = await fetch("https://mxverify.uk/api/v1/bv", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${process.env.MXVERIFY_KEY}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ targets: stale.slice(i, i + 100) }),
+    });
+    if (res.status === 429) {
+      throw new Error(`Daily limit: retry after ${res.headers.get("retry-after")} s`);
+    }
+    const { results } = await res.json();
+    // Keep final answers; leave "valuing" and "not_valued" to be asked again later.
+    for (const r of results) {
+      if (!["valuing", "not_valued"].includes(r.status)) cache.set(r.target, { at: Date.now(), answer: r });
+    }
+  }
+  return domains.map((d) => cache.get(d)?.answer ?? null);
+}
+```
+
+</Tab>
+</Tabs>
+
+## Python
+
+```python
+import os, requests
+
+r = requests.post(
+    "https://mxverify.uk/api/v1/bv",
+    headers={"Authorization": f"Bearer {os.environ['MXVERIFY_KEY']}"},
+    json={"targets": ["google.com", "alistapart.com"]},
+    timeout=30,
+)
+r.raise_for_status()
+for result in r.json()["results"]:
+    if result["status"] == "valued":
+        print(result["target"], result["bv"]["usd"], result["attribution"]["url"])
+    else:
+        print(result["target"], result["status"], result.get("reason", ""))
+```
+
+## PHP
+
+```php
+<?php
+$ch = curl_init('https://mxverify.uk/api/v1/bv/' . rawurlencode($domain));
+curl_setopt_array($ch, [
+  CURLOPT_HTTPHEADER => ['Authorization: Bearer ' . getenv('MXVERIFY_KEY')],
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_TIMEOUT => 30,
+]);
+$answer = json_decode(curl_exec($ch), true);
+curl_close($ch);
+
+if (($answer['status'] ?? '') === 'valued') {
+  printf(
+    'BV $%d per link · <a href="%s">%s</a>',
+    round($answer['bv']['usd']),
+    htmlspecialchars($answer['attribution']['url']),
+    htmlspecialchars($answer['attribution']['text'])
+  );
+}
+```
+
+## A bulk job, start to finish (partner keys)
+
+```js
+const headers = { Authorization: `Bearer ${process.env.MXVERIFY_PARTNER_KEY}`, "Content-Type": "application/json" };
+
+const start = await fetch("https://mxverify.uk/api/v1/bv/valuations", {
+  method: "POST", headers, body: JSON.stringify({ targets: domains.slice(0, 1000) }),
+});
+const job = await start.json();
+
+let view;
+do {
+  await new Promise((r) => setTimeout(r, 30_000));
+  view = await (await fetch(job.status_url, { headers })).json();
+} while (view.status === "running");
+
+for (const r of view.results) save(r.target, r); // then refresh with lookups within 30 days
+```

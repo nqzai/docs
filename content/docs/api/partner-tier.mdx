@@ -1,0 +1,53 @@
+---
+title: Partner tier
+description: Volume lookups and bulk valuations for marketplaces and tools, paid per call from a prepaid wallet.
+---
+
+The partner tier is for products that show BV across many sites: link marketplaces, outreach tools, SEO platforms. It uses the same API and the same answers; what changes is how much a key may do, and that the volume beyond the free allowance is paid for.
+
+## What a partner key gets
+
+| | Free allowance (every key) | Partner key, beyond the allowance |
+|---|---|---|
+| Lookups a day | 1,000 | up to 50,000 a key, at **$0.001** each |
+| New sites valued a day | 25 | up to 5,000 a key, at **$0.02** each |
+| [Bulk jobs](/api/bulk-jobs) | — | up to 1,000 sites a job |
+
+The limits are a starting point; an account can ask for its own. A partner key keeps the free allowance: only what goes past it is charged.
+
+- **Lookups** are charged per target answered, as with any key.
+- **Valuations** are charged only for **sites actually valued**: a name that turns out to have no website is not charged.
+- A site mxverify already values is a lookup, never a valuation.
+
+## Applying
+
+Apply on [bklink.uk/api-keys](https://bklink.uk/api-keys): say what you will build and where. Applications are reviewed by hand, and you are emailed when yours is approved, with your limits and prices. Once approved, every key on the account is a partner key within about a minute, including keys made later.
+
+## How you pay
+
+Partner usage is paid from your **bklink wallet**, the same prepaid balance bklink's audits use. Top up by card on [bklink.uk/wallet](https://bklink.uk/wallet).
+
+- **Charged nightly**, once per key per UTC day, for the day before. Each day appears on the wallet page as **BV API usage**, and on the API keys page with its lookups, sites valued and amount.
+- **Paid calls run while the wallet covers them.** The API keeps a running count of the day's paid usage against your balance. When the balance is used, your keys carry on at the free limits; they are never cut off.
+- **A day the wallet cannot cover** is left owed. While anything is owed, your keys run at the free limits. Top up and the owed days are charged at once; paid limits return within a few minutes.
+- **Low balance.** You are emailed when the balance would cover less than about three days at your recent rate, or when a day could not be charged, at most every three days.
+- Unspent balance is refundable under bklink's [refund policy](https://bklink.uk/legal/refunds).
+
+## Worked example
+
+A marketplace looks up 20,000 sites on one key in a day, 400 of which mxverify had never valued, and 380 of those turn out to be real websites:
+
+| | Count | Free | Charged | Amount |
+|---|---|---|---|---|
+| Lookups | 20,000 | 1,000 | 19,000 × $0.001 | $19.00 |
+| Sites valued | 380 | 25 | 355 × $0.02 | $7.10 |
+| **That night's charge** | | | | **$26.10** |
+
+The next day, the same 20,000 lookups cost $19.00: the 380 sites are valued now.
+
+## Rules that stay the same
+
+- [Attribution](/api/attribution-and-terms) on every figure you show.
+- BV is never presented as a price.
+- Answers may be cached up to 30 days; BV may not be resold or redistributed in bulk.
+- Partner keys belong on your server, not in client-side code. See [Authentication](/api/authentication).
