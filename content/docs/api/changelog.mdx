@@ -5,6 +5,8 @@ description: Changes to the BV API.
 
 ## 2026-10-25
 
+- **OpenAPI 3.1 description** at [bklink.uk/docs/openapi.json](https://bklink.uk/docs/openapi.json), for Postman and client generators. See [OpenAPI and Postman](/api/openapi).
+
 - **Partner tier.** Volume limits (50,000 lookups and 5,000 new valuations a key a day), paid beyond the free allowance at $0.001 a lookup and $0.02 a site valued, charged nightly to the bklink wallet. Apply on [bklink.uk/api-keys](https://bklink.uk/api-keys). See [Partner tier](/api/partner-tier).
 - **Bulk valuation jobs** for partner keys: `POST /api/v1/bv/valuations` with up to 1,000 sites, `GET /api/v1/bv/valuations/{id}` for progress. See [Bulk jobs](/api/bulk-jobs).
 - New errors: `funds_needed` (429), `partner_only` (403), `too_many_jobs` (429), `not_found` (404, jobs), `unavailable` (503, jobs).

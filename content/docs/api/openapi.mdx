@@ -1,0 +1,28 @@
+---
+title: OpenAPI and Postman
+description: The BV API as an OpenAPI 3.1 description, to import into Postman, generate a client, or test against.
+---
+
+The whole API — endpoints, parameters, result objects, errors and authentication — is described in one OpenAPI 3.1 file:
+
+**[bklink.uk/docs/openapi.json](https://bklink.uk/docs/openapi.json)**
+
+It is checked against the live API's answers when it changes.
+
+## Import into Postman
+
+1. In Postman, choose **Import** and paste `https://bklink.uk/docs/openapi.json`.
+2. Postman makes a collection with every request.
+3. In the collection's **Authorization** tab choose **Bearer Token** and set it to your key from [bklink.uk/api-keys](https://bklink.uk/api-keys). Keep it in a Postman environment variable, not in a shared collection.
+
+## Generate a client
+
+Any OpenAPI 3.1 generator works. For example, TypeScript types:
+
+```bash
+npx openapi-typescript https://bklink.uk/docs/openapi.json -o mxverify-bv.d.ts
+```
+
+## Versions
+
+The file's `info.version` follows the API: 1.x for `/api/v1`. Changes are listed in the [changelog](/api/changelog).
