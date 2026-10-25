@@ -1,8 +1,8 @@
 # bklink docs
 
-Documentation for [bklink](https://bklink.uk) (backlink audits), [mxverify](https://mxverify.uk) (backlink values) and the BV API. Published at **[docs.bklink.uk](https://docs.bklink.uk)**.
+Documentation for [bklink](https://bklink.uk) (backlink audits), [mxverify](https://mxverify.uk) (backlink values) and the BV API. Published at **[bklink.uk/docs](https://bklink.uk/docs)**.
 
-Built with [Fumadocs](https://fumadocs.dev) on Next.js as a fully static site, served from Cloudflare Workers static assets.
+Built with [Fumadocs](https://fumadocs.dev) on Next.js as a fully static site under the base path `/docs`, served from Cloudflare Workers static assets. The docs Worker answers `bklink.uk/docs` and `bklink.uk/docs/*`; the bklink app answers the rest of bklink.uk.
 
 ## Writing
 
@@ -20,7 +20,7 @@ npm run dev
 ## Building and deploying
 
 ```bash
-npm run build          # static export to ./out
+npm run build          # static export to ./out, staged under ./dist/docs
 npx wrangler deploy    # needs CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID in the environment
 ```
 

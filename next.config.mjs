@@ -7,6 +7,8 @@ const withMDX = createMDX();
 const config = {
   // A static site: every page is built to plain files and served from Cloudflare Workers static assets.
   output: 'export',
+  // Served at bklink.uk/docs: the docs Worker takes bklink.uk/docs*, the bklink app everything else.
+  basePath: '/docs',
   trailingSlash: false,
   reactStrictMode: true,
   images: { unoptimized: true },

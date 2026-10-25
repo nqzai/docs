@@ -1,15 +1,19 @@
-// docs.bklink.uk: the static export in ./out (npm run build), served as Cloudflare Workers static assets.
+// bklink.uk/docs: the static export (npm run build), staged under ./dist/docs and served as Cloudflare Workers static
+// assets. The routes below are more specific than the bklink app's bklink.uk/*, so they win for /docs and nothing else.
 // No Worker script, no bindings, no secrets: deploy credentials come from the environment, never this file.
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "bklink-docs",
   "compatibility_date": "2026-10-01",
   "assets": {
-    "directory": "./out",
+    "directory": "./dist",
     "not_found_handling": "404-page",
     "html_handling": "auto-trailing-slash"
   },
-  "routes": [{ "pattern": "docs.bklink.uk", "custom_domain": true }],
+  "routes": [
+    { "pattern": "bklink.uk/docs", "zone_name": "bklink.uk" },
+    { "pattern": "bklink.uk/docs/*", "zone_name": "bklink.uk" }
+  ],
   "workers_dev": false,
   "preview_urls": false
 }

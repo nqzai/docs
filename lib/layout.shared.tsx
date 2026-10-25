@@ -1,12 +1,12 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { gitConfig } from './shared';
+import { basePath, gitConfig } from './shared';
 
 export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
       title: (
         <span className="flex items-center gap-2 font-semibold">
-          <img src="/logo.png" alt="" width={22} height={22} className="rounded" />
+          <img src={`${basePath}/logo.png`} alt="" width={22} height={22} className="rounded" />
           bklink docs
         </span>
       ),
